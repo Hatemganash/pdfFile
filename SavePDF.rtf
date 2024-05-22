@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\partightenfactor0
+
+\f0\b\fs40 \cf0 Save page as pdf \uc0\u8232 \
+\
+\\\\ on the button\uc0\u8232 \u8232 
+\f1\b0\fs26 // Generate PDF data from the view\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0     let pdfData = createPDF(from: view)\
+    \
+    // Save PDF data to a file\
+    if let pdfFilePath = savePDF(data: pdfData, fileName: "Reservation.pdf") \{\
+        // Open the saved PDF file\
+        openPDF(at: pdfFilePath)\
+    \}\uc0\u8232 \u8232 \u8232 other code \
+\uc0\u8232 
+\f0\b extension
+\f1\b0  YourVC: UIDocumentInteractionControllerDelegate \{\
+    
+\f0\b func
+\f1\b0  documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController \{\
+        
+\f0\b return
+\f1\b0  
+\f0\b self
+\f1\b0 \
+    \}\
+    
+\f0\b func
+\f1\b0  createPDF(from view: UIView) -> Data \{\
+        
+\f0\b let
+\f1\b0  pdfRenderer = UIGraphicsPDFRenderer(bounds: view.bounds)\
+        
+\f0\b let
+\f1\b0  data = pdfRenderer.pdfData \{ context 
+\f0\b in
+\f1\b0 \
+            context.beginPage()\
+            view.layer.render(in: context.cgContext)\
+        \}\
+        
+\f0\b return
+\f1\b0  data\
+    \}\
+    
+\f0\b func
+\f1\b0  openPDF(at filePath: URL) \{\
+        
+\f0\b let
+\f1\b0  documentInteractionController = UIDocumentInteractionController(url: filePath)\
+        documentInteractionController.delegate = 
+\f0\b self
+\f1\b0 \
+        documentInteractionController.presentPreview(animated: 
+\f0\b true
+\f1\b0 )\
+    \}\
+    \
+    
+\f0\b func
+\f1\b0  savePDF(data: Data, fileName: String) -> URL? \{\
+        // Get the URL for the documents directory\
+        
+\f0\b let
+\f1\b0  documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first\
+        
+\f0\b let
+\f1\b0  pdfFilePath = documentsDirectory?.appendingPathComponent(fileName)\
+        \
+        
+\f0\b do
+\f1\b0  \{\
+            // Write the PDF data to the file\
+            
+\f0\b try
+\f1\b0  data.write(to: pdfFilePath!)\
+            
+\f0\b return
+\f1\b0  pdfFilePath\
+        \} 
+\f0\b catch
+\f1\b0  \{\
+            print("Could not save PDF file: \\(error)")\
+            
+\f0\b return
+\f1\b0  
+\f0\b nil
+\f1\b0 \
+        \}\
+    \}\
+\}}
