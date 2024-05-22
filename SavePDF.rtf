@@ -1,7 +1,12 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2761
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Menlo-Regular;
+\f3\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red31\green31\blue36;\red252\green95\blue163;
+\red65\green161\blue192;\red208\green168\blue255;\red208\green168\blue255;\red161\green103\blue230;\red108\green121\blue134;
+\red161\green103\blue230;}
+{\*\expandedcolortbl;;\csgenericrgb\c100000\c100000\c100000\c85000;\csgenericrgb\c12054\c12284\c14131;\csgenericrgb\c98839\c37355\c63833;
+\csgenericrgb\c25490\c63137\c75294;\csgenericrgb\c81569\c65882\c100000;\csgenericrgb\c81681\c65692\c99927;\csgenericrgb\c63232\c40219\c90115;\csgenericrgb\c42394\c47462\c52518;
+\csgenericrgb\c63137\c40392\c90196;}
 \margl1440\margr1440\vieww11520\viewh8400\viewkind0
 \deftab560
 \pard\pardeftab560\partightenfactor0
@@ -48,7 +53,46 @@
 \f0\b return
 \f1\b0  data\
     \}\
-    
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f2\fs24 \cf2 \cb3    
+\f3\b \cf4 func
+\f2\b0 \cf2  \cf5 createPDF\cf2 (\cf5 fromScrollView\cf2  scrollView: \cf6 UIScrollView\cf2 ) -> \cf7 Data\cf2  \{\
+        
+\f3\b \cf4 let
+\f2\b0 \cf2  originalContentOffset = scrollView.\cf8 contentOffset\cf2 \
+        
+\f3\b \cf4 let
+\f2\b0 \cf2  originalFrame = scrollView.\cf8 frame\cf2 \
+        \
+        \cf9 // Adjust the frame of the scrollView to its content size\cf2 \
+        scrollView.\cf8 contentOffset\cf2  = .\cf8 zero\cf2 \
+        scrollView.\cf8 frame\cf2  = \cf7 CGRect\cf2 (\cf10 origin\cf2 : .\cf8 zero\cf2 , \cf10 size\cf2 : scrollView.\cf8 contentSize\cf2 )\
+        \
+        \cf9 // Create PDF renderer\cf2 \
+        
+\f3\b \cf4 let
+\f2\b0 \cf2  pdfRenderer = \cf6 UIGraphicsPDFRenderer\cf2 (\cf6 bounds\cf2 : scrollView.\cf8 bounds\cf2 )\
+        
+\f3\b \cf4 let
+\f2\b0 \cf2  data = pdfRenderer.\cf10 pdfData\cf2  \{ context 
+\f3\b \cf4 in
+\f2\b0 \cf2 \
+            context.\cf10 beginPage\cf2 ()\
+            scrollView.\cf8 layer\cf2 .\cf10 render\cf2 (\cf10 in\cf2 : context.\cf8 cgContext\cf2 )\
+        \}\
+        \
+        \cf9 // Restore the original frame and content offset\cf2 \
+        scrollView.\cf8 frame\cf2  = originalFrame\
+        scrollView.\cf8 contentOffset\cf2  = originalContentOffset\
+        \
+        
+\f3\b \cf4 return
+\f2\b0 \cf2  data\
+    \}
+\f1\fs26 \cf0 \cb1 \
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0     
 \f0\b func
 \f1\b0  openPDF(at filePath: URL) \{\
         
