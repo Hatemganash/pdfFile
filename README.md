@@ -8,7 +8,12 @@ Save page as pdf  
         // Open the saved PDF file
         openPDF(at: pdfFilePath)
     }   other code 
- extension YourVC: UIDocumentInteractionControllerDelegate {
+    
+//extension
+
+ 
+ 
+        extension YourVC: UIDocumentInteractionControllerDelegate {
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         return self
     }
@@ -60,4 +65,5 @@ Save page as pdf  
             return nil
         }
     }
-}
+    }
+
