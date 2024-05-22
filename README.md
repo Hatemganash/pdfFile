@@ -1,8 +1,8 @@
 Save page as pdf  
 
 \\ on the button  // Generate PDF data from the view
-    let pdfData = createPDF(from: view)
-    
+   
+     let pdfData = createPDF(from: view)
     // Save PDF data to a file
     if let pdfFilePath = savePDF(data: pdfData, fileName: "Reservation.pdf") {
         // Open the saved PDF file
